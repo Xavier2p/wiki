@@ -3,13 +3,13 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>/forge Wiki</title>
+        <title>The /forge Wiki</title>
         <meta name="robots" content="noindex" />
 
 
         <!-- Custom HTML head -->
         
-        <meta name="description" content="">
+        <meta name="description" content="The documentation of /forge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
@@ -84,7 +84,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="intro.html"><strong aria-hidden="true">1.</strong> Intro</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro.html">Intro</a></li><li class="chapter-item expanded affix "><li class="part-title">Technical</li><li class="chapter-item expanded "><a href="deployment.html"><strong aria-hidden="true">1.</strong> Deployment</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="requirements.html"><strong aria-hidden="true">1.1.</strong> Requirements</a></li></ol></li><li class="chapter-item expanded "><a href="infra/index.html"><strong aria-hidden="true">2.</strong> Infrastructure</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="infra/system.html"><strong aria-hidden="true">2.1.</strong> As Nix</a></li><li class="chapter-item expanded "><a href="infra/as-code.html"><strong aria-hidden="true">2.2.</strong> As Code</a></li></ol></li><li class="chapter-item expanded "><li class="part-title">Services</li><li class="chapter-item expanded "><a href="media/index.html"><strong aria-hidden="true">3.</strong> Media</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="media/metube.html"><strong aria-hidden="true">3.1.</strong> MeTube</a></li><li class="chapter-item expanded "><a href="media/jellyfin.html"><strong aria-hidden="true">3.2.</strong> Jellyfin</a></li><li class="chapter-item expanded "><a href="media/jellyseerr.html"><strong aria-hidden="true">3.3.</strong> Jellyseerr</a></li></ol></li><li class="chapter-item expanded "><a href="cloud/index.html"><strong aria-hidden="true">4.</strong> Cloud</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="cloud/nextcloud.html"><strong aria-hidden="true">4.1.</strong> NextCloud</a></li><li class="chapter-item expanded "><a href="cloud/onlyoffice.html"><strong aria-hidden="true">4.2.</strong> OnlyOffice</a></li><li class="chapter-item expanded "><a href="cloud/photoprism.html"><strong aria-hidden="true">4.3.</strong> PhotoPrism</a></li></ol></li><li class="chapter-item expanded "><a href="others/index.html"><strong aria-hidden="true">5.</strong> Others</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="others/homer.html"><strong aria-hidden="true">5.1.</strong> Homer</a></li><li class="chapter-item expanded "><a href="others/uptime-kuma.html"><strong aria-hidden="true">5.2.</strong> Status</a></li><li class="chapter-item expanded "><a href="others/freshrss.html"><strong aria-hidden="true">5.3.</strong> FreshRSS</a></li><li class="chapter-item expanded "><a href="others/speedtest.html"><strong aria-hidden="true">5.4.</strong> Speedtest</a></li></ol></li><li class="chapter-item expanded "><li class="part-title">Resources</li><li class="chapter-item expanded "><a href="links.html"><strong aria-hidden="true">6.</strong> Links</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><a href="appendix/LICENSE.html">License</a></li><li class="chapter-item expanded affix "><a href="appendix/CONTRIBUTING.html">Contributing</a></li><li class="chapter-item expanded affix "><a href="appendix/CREDITS.html">Credits</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -135,11 +135,14 @@
                         </button>
                     </div>
 
-                    <h1 class="menu-title">/forge Wiki</h1>
+                    <h1 class="menu-title">The /forge Wiki</h1>
 
                     <div class="right-buttons">
                         <a href="print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/Xavier2p/wiki" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
 
                     </div>
@@ -177,6 +180,232 @@
 <p>This is the documentation for the <code>/forge</code> project.</p>
 <blockquote>
 <p><strong>Note:</strong> This documentation is a work in progress. It is not complete and may contain errors.</p>
+</blockquote>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="deployment"><a class="header" href="#deployment">Deployment</a></h1>
+<h2 id="1-clone-repository"><a class="header" href="#1-clone-repository">#1 Clone repository</a></h2>
+<pre><code class="language-bash">git clone https://github.com/Xavier2p/infra-as-code.git &amp;&amp; cd infra-as-code
+</code></pre>
+<h2 id="2-pre-deploy-configuration-using-ansible"><a class="header" href="#2-pre-deploy-configuration-using-ansible">#2 Pre-deploy configuration (using Ansible)</a></h2>
+<pre><code class="language-bash">ansible-playbook -i ansible/hosts.yml -u &lt;USER&gt; -b ansible/playbook.yml
+</code></pre>
+<h2 id="3-deploy-infrastructure-using-terraform"><a class="header" href="#3-deploy-infrastructure-using-terraform">#3 Deploy infrastructure (using Terraform)</a></h2>
+<pre><code class="language-bash">terraform init
+terraform apply
+</code></pre>
+<p>You can use the <code>-target=module.&lt;module_name&gt;</code> option to deploy only a specific module or a specific host.</p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="requirements"><a class="header" href="#requirements">Requirements</a></h2>
+<h3 id="local-configuration"><a class="header" href="#local-configuration">Local Configuration</a></h3>
+<p>To deploy the <code>/forge</code> infrastructure, you will need:</p>
+<ul>
+<li><a href="https://ansible.com/">Ansible</a></li>
+<li><a href="https://terraform.io/">Terraform</a></li>
+</ul>
+<p>This two tools must be installed on your local machine.</p>
+<p>The installation process installs the following tools on the remote machine:</p>
+<ul>
+<li><a href="https://docker.com/">Docker</a></li>
+<li><a href="https://docs.docker.com/compose/">Docker Compose</a></li>
+<li><a href="https://git-scm.com/">Git</a></li>
+<li><a href="https://zsh.org/">zsh</a></li>
+</ul>
+<h3 id="host-configuration"><a class="header" href="#host-configuration">Host Configuration</a></h3>
+<p>The configuration is tested only for <code>Debian</code>, I can't guarantee that it will work on other distributions.
+There are few requirements for the remote hosts:</p>
+<ul>
+<li>All the hosts must have the same user with root privileges.</li>
+<li>All the IPs address must be written in the <code>ansible/hosts.yml</code> file.</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="infrastructure"><a class="header" href="#infrastructure">Infrastructure</a></h1>
+<p>In this part, you will find all the information about the infrastructure of my homelab.</p>
+<h2 id="hosts"><a class="header" href="#hosts">Hosts</a></h2>
+<ul>
+<li><a href="infra/../hosts/scariff"><code>scariff</code></a>: My main server, a Raspberry Pi 4.</li>
+<li><a href="infra/../hosts/exegol"><code>exegol</code></a>: My laptop, a MacBook Air M1.</li>
+<li><a href="infra/../hosts/eadu"><code>eadu</code></a>: A simple Debian VM, used for testing.</li>
+<li><a href="infra/../hosts/mandalore"><code>mandalore</code></a>: My development server, a Dell PowerEdge R710 (upcoming...).</li>
+</ul>
+<h2 id="sections"><a class="header" href="#sections">Sections</a></h2>
+<blockquote>
+<h3 id="infrastructure-as-nix"><a class="header" href="#infrastructure-as-nix"><a href="infra/./system.html">Infrastructure as Nix</a></a></h3>
+<p>This part is for the system running on the hosts, a custom NixOS configuration.</p>
+</blockquote>
+<blockquote>
+<h3 id="infrastructure-as-code"><a class="header" href="#infrastructure-as-code"><a href="infra/./as-code.html">Infrastructure as Code</a></a></h3>
+<p>This part is for deploying the services on the hosts, using Terraform.</p>
+</blockquote>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="system"><a class="header" href="#system">System</a></h1>
+<blockquote>
+<p>Not implemented yet</p>
+</blockquote>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="as-code"><a class="header" href="#as-code">As Code</a></h1>
+<p>My Infrastructure as Code is based on <a href="https://terraform.io/"><code>Terraform</code></a>.
+All the files are publicly available on <a href="https://github.com/Xavier2p/infra-as-code">GitHub</a>.</p>
+<h2 id="structure"><a class="header" href="#structure">Structure</a></h2>
+<pre><code class="language-bash">./forge
+├── ansible             # Ansible configuration, pre-deployment
+├── hosts               # Hosts configuration
+│   ├── common          # Common configuration for all hosts
+│   ├── exegol
+│   ├── eadu
+│   └── scariff
+├── stacks              # Stacks of services
+│   ├── admin
+│   ├── cloud
+│   ├── monitoring
+│   ├── media
+│   └── services
+├── hosts.tf            # Hosts configuration
+├── main.tf             # Entry point
+├── modules             # Terraform modules
+├── providers.tf
+├── outputs.tf
+├── variables.tf
+└── forge.tfvars        # Private variables
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="media"><a class="header" href="#media">Media</a></h1>
+<h2 id="concept"><a class="header" href="#concept">Concept</a></h2>
+<p>The idea behind the media part of the <code>/forge</code> is to provide a self-hosted Netflix alternative.</p>
+<h2 id="services"><a class="header" href="#services">Services</a></h2>
+<blockquote>
+<h3 id="metube"><a class="header" href="#metube"><a href="media/./metube.html">MeTube</a></a></h3>
+<p>Downloader for YouTube videos.</p>
+</blockquote>
+<blockquote>
+<h3 id="jellyfin"><a class="header" href="#jellyfin"><a href="media/./jellyfin.html">Jellyfin</a></a></h3>
+<p>Frontend for the media library.</p>
+</blockquote>
+<blockquote>
+<h3 id="jellyseerr"><a class="header" href="#jellyseerr"><a href="media/./jellyseerr.html">Jellyseerr</a></a></h3>
+<p>Video On Demand service.</p>
+</blockquote>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="metube-1"><a class="header" href="#metube-1">MeTube</a></h1>
+<p><a href="https://ytdl.xavier2p.fr"><img src="https://status.xavier2p.fr/api/badge/40/status?style=for-the-badge" alt="status" /></a></p>
+<blockquote>
+<p>This service can be accessed at: <a href="https://ytdl.xavier2p.fr">ytdl.xavier2p.fr</a>.</p>
+<p>The source code is available on <a href="https://github.com/alexta69/metube">GitHub</a>.</p>
+</blockquote>
+<h2 id="description"><a class="header" href="#description">Description</a></h2>
+<p>MeTube is a web interface for <a href="https://github.com/ytdl-org/youtube-dl">youtube-dl</a>. It's a simple downloader for YouTube videos and playlists.</p>
+<h2 id="usage"><a class="header" href="#usage">Usage</a></h2>
+<p>Paste your URL on the homepage, choose your format/quality and click on the download button. The download will start automatically.</p>
+<p>At the end of the download, you will be redirected to the download page. You can download the file.</p>
+<p>Please ensure you delete the downloaded files after you get them. The <code>/forge</code> team isn't not responsible for the content you download.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="jellyfin-1"><a class="header" href="#jellyfin-1">Jellyfin</a></h1>
+<blockquote>
+<p>Not implemented yet</p>
+</blockquote>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="jellyseerr-1"><a class="header" href="#jellyseerr-1">Jellyseerr</a></h1>
+<blockquote>
+<p>Not implemented yet</p>
+</blockquote>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="cloud"><a class="header" href="#cloud">Cloud</a></h1>
+<h2 id="concept-1"><a class="header" href="#concept-1">Concept</a></h2>
+<p>The idea behind the cloud part of the <code>/forge</code> is to provide a self-hosted alternative to the Google Suite.
+We can now ensure that our data is not used by Google to make money.</p>
+<h2 id="services-1"><a class="header" href="#services-1">Services</a></h2>
+<blockquote>
+<h3 id="nextcloud"><a class="header" href="#nextcloud"><a href="cloud/./nextcloud.html">NextCloud</a></a></h3>
+<p>Alternative to Google Drive, Dropbox, etc.</p>
+</blockquote>
+<blockquote>
+<h3 id="onlyoffice"><a class="header" href="#onlyoffice"><a href="cloud/./onlyoffice.html">OnlyOffice</a></a></h3>
+<p>Alternative to Google Docs, Microsoft Office, etc.</p>
+</blockquote>
+<blockquote>
+<h3 id="photoprism"><a class="header" href="#photoprism"><a href="cloud/./photoprism.html">PhotoPrism</a></a></h3>
+<p>Alternative to Google Photos, Apple Photos, etc.</p>
+</blockquote>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="nextcloud-1"><a class="header" href="#nextcloud-1">Nextcloud</a></h1>
+<blockquote>
+<p>Not implemented yet</p>
+</blockquote>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="onlyoffice-1"><a class="header" href="#onlyoffice-1">OnlyOffice</a></h1>
+<blockquote>
+<p>Not implemented yet</p>
+</blockquote>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="photoprism-1"><a class="header" href="#photoprism-1">PhotoPrism</a></h1>
+<blockquote>
+<p>Not implemented yet</p>
+</blockquote>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="others"><a class="header" href="#others">Others</a></h1>
+<p>Other services, not really related to media or cloud, but still useful.</p>
+<h2 id="services-2"><a class="header" href="#services-2">Services</a></h2>
+<blockquote>
+<h3 id="homer"><a class="header" href="#homer"><a href="others/./homer.html">Homer</a></a></h3>
+<p>Dashboard for public services.</p>
+</blockquote>
+<blockquote>
+<h3 id="status"><a class="header" href="#status"><a href="others/./uptime-kuma.html">Status</a></a></h3>
+<p>Uptime monitor for all the services.</p>
+</blockquote>
+<blockquote>
+<h3 id="freshrss"><a class="header" href="#freshrss"><a href="others/./freshrss.html">FreshRSS</a></a></h3>
+<p>RSS reader.</p>
+</blockquote>
+<blockquote>
+<h3 id="speedtest"><a class="header" href="#speedtest"><a href="others/./speedtest.html">Speedtest</a></a></h3>
+<p>Speedtest for the internet connection.</p>
+</blockquote>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="homer-1"><a class="header" href="#homer-1">Homer</a></h1>
+<p><a href="https://public.xavier2p.fr"><img src="https://status.xavier2p.fr/api/badge/37/status?style=for-the-badge" alt="status" /></a></p>
+<blockquote>
+<p>This service can be accessed at <a href="https://public.xavier2p.fr">public.xavier2p.fr</a>.</p>
+<p>The source code is available on <a href="https://github.com/bastienwirtz/homer">GitHub</a>.</p>
+</blockquote>
+<h2 id="description-1"><a class="header" href="#description-1">Description</a></h2>
+<p>This dashboard is a simple, static, HTML page. It's a simple way to access all the public services.</p>
+<h2 id="usage-1"><a class="header" href="#usage-1">Usage</a></h2>
+<p>Just go to <a href="https://public.xavier2p.fr">public.xavier2p.fr</a> and click on the service you want to access.</p>
+<p>If a service is not implemented yet, the tag will be red.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="uptime-kuma"><a class="header" href="#uptime-kuma">Uptime Kuma</a></h1>
+<p><a href="https://status.xavier2p.fr"><img src="https://status.xavier2p.fr/api/badge/43/status?style=for-the-badge" alt="status" /></a></p>
+<blockquote>
+<p>This service can be accessed at <a href="https://status.xavier2p.fr/status/external">status.xavier2p.fr</a>.</p>
+<p>The source code is available on <a href="https://github.com/louislam/uptime-kuma">GitHub</a>.</p>
+</blockquote>
+<h2 id="description-2"><a class="header" href="#description-2">Description</a></h2>
+<p>Uptime Kuma is a fancy self-hosted monitoring tool. It's a simple way to monitor all the services. It's used to monitor the whole infrastructure.</p>
+<h2 id="usage-2"><a class="header" href="#usage-2">Usage</a></h2>
+<p>You have only access to the external status page. You can't access the admin page.</p>
+<p>Just go to <a href="https://status.xavier2p.fr/status/external">status.xavier2p.fr</a> and check the status of the services.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="freshrss-1"><a class="header" href="#freshrss-1">FreshRSS</a></h1>
+<blockquote>
+<p>Not implemented yet</p>
+</blockquote>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="speedtest-1"><a class="header" href="#speedtest-1">Speedtest</a></h1>
+<blockquote>
+<p>Not implemented yet</p>
+</blockquote>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="links"><a class="header" href="#links">Links</a></h1>
+<blockquote>
+<p>Not implemented yet</p>
+</blockquote>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="license---mit"><a class="header" href="#license---mit">License - MIT</a></h1>
+<blockquote>
+<p>Copyright (c) 2023 Xavier2p</p>
+</blockquote>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &quot;Software&quot;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="contributing"><a class="header" href="#contributing">Contributing</a></h1>
+<blockquote>
+<p>Not implemented yet</p>
+</blockquote>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="credits"><a class="header" href="#credits">Credits</a></h1>
+<blockquote>
+<p>Not implemented yet</p>
 </blockquote>
 
                     </main>
